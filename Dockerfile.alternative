@@ -1,0 +1,32 @@
+# First Stage: Build the application with Maven
+FROM maven:3.8.2-openjdk-11 as build
+
+# Set the current working directory inside the container
+WORKDIR /app
+
+# Copy pom.xml file to the /app directory
+COPY pom.xml .
+
+# Download the dependencies - this can be cached if the pom.xml file doesn't change
+RUN mvn dependency:go-offline
+
+# Copy the rest of the application source code
+COPY src /app/src
+
+# Build the application
+RUN mvn clean package
+
+# Second Stage: Create the final image based on openjdk:11.0.6-jre
+FROM openjdk:11.0.6-jre
+
+# Set volume point to /tmp
+VOLUME /tmp
+
+# Make port 8080 available to the world outside the container
+EXPOSE 8080
+
+# Copy the built JAR file from the build stage into this container
+COPY --from=build /app/target/*.jar app.jar
+
+# Run the application
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
