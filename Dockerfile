@@ -1,5 +1,5 @@
-LABEL authors="cvillena"
 FROM openjdk:11.0.6-jre
+LABEL authors="cvillena"
 
 # Set volume point to /tmp
 VOLUME /tmp

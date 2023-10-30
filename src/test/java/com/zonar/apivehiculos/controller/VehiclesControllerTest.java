@@ -30,15 +30,19 @@ public class VehiclesControllerTest {
     @InjectMocks
     private VehiclesController vehiclesController;
 
+    private Manufacturer manufacturer;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(vehiclesController).build();
+
+        manufacturer = new Manufacturer();
     }
+
 
     @Test
     public void testGetAllManufacturersRespondsWithJson() throws Exception {
-        Manufacturer manufacturer = new Manufacturer();
         List<Manufacturer> manufacturers = Arrays.asList(manufacturer);
 
         when(manufacturerService.getAllManufacturers()).thenReturn(manufacturers);
@@ -51,7 +55,6 @@ public class VehiclesControllerTest {
 
     @Test
     public void testGetAllManufacturersRespondsWithXml() throws Exception {
-        Manufacturer manufacturer = new Manufacturer();
         List<Manufacturer> manufacturers = Arrays.asList(manufacturer);
 
         when(manufacturerService.getAllManufacturers()).thenReturn(manufacturers);
@@ -64,7 +67,6 @@ public class VehiclesControllerTest {
 
     @Test
     public void testGetManufacturersByCountryRespondsWithJson() throws Exception {
-        Manufacturer manufacturer = new Manufacturer();
         List<Manufacturer> manufacturers = Arrays.asList(manufacturer);
 
         when(manufacturerService.getManufacturersByCountry("Japan")).thenReturn(manufacturers);
@@ -77,7 +79,6 @@ public class VehiclesControllerTest {
 
     @Test
     public void testGetManufacturersByCountryRespondsWithXml() throws Exception {
-        Manufacturer manufacturer = new Manufacturer();
         List<Manufacturer> manufacturers = Arrays.asList(manufacturer);
 
         when(manufacturerService.getManufacturersByCountry("Japan")).thenReturn(manufacturers);
